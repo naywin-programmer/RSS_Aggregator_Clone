@@ -1,8 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"html"
 	"net/http"
 )
+
+func helloWorldRespond(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello World, %q", html.EscapeString(r.URL.Path))
+}
 
 func errorResponse(w http.ResponseWriter, r *http.Request) {
 	respondErrorWithJSON(w, 400, "Something went wrong.")

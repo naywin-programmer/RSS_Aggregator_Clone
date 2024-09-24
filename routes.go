@@ -1,20 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"html"
-	"net/http"
-
 	"github.com/go-chi/chi/v5"
 )
 
-func webRoutes(router *chi.Mux) {
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello World, %q", html.EscapeString(r.URL.Path))
-	})
+func webRoutes(router *chi.Mux, dbQueryApiConfig DatabaseQueryApiConfig) {
+	router.Get("/", helloWorldRespond)
 }
 
-func apiRoutes(router *chi.Mux) {
+func apiRoutes(router *chi.Mux, dbQueryApiConfig DatabaseQueryApiConfig) {
+	router.Post("/create-user", dbQueryApiConfig.responseCreateUser)
 	router.Get("/healthz", healthz)
 	router.Get("/error", errorResponse)
 }
