@@ -1,20 +1,22 @@
-package main
+package controller
 
 import (
 	"fmt"
 	"html"
 	"net/http"
+
+	"github.com/naywin-programmer/RSS_Aggregator/utils"
 )
 
-func helloWorldRespond(w http.ResponseWriter, r *http.Request) {
+func HelloWorldRespond(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World, %q", html.EscapeString(r.URL.Path))
 }
 
-func errorResponse(w http.ResponseWriter, r *http.Request) {
-	respondErrorWithJSON(w, 400, "Something went wrong.")
+func ErrorResponse(w http.ResponseWriter, r *http.Request) {
+	utils.RespondErrorWithJSON(w, 400, "Something went wrong.")
 }
 
-func healthz(w http.ResponseWriter, r *http.Request) {
+func Healthz(w http.ResponseWriter, r *http.Request) {
 	// all the field names in the struct must start with Uppercase. Otherwise, it will not export in the respond data
 	type techstack struct {
 		Title       string `json:"title"`
@@ -39,7 +41,7 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 		Dependencies []dependency `json:"dependencies"`
 	}
 
-	respondWithJSON(w, 200, data{
+	utils.RespondWithJSON(w, 200, data{
 		Status:    "Active",
 		Developer: "Nay Win",
 		AppName:   "RSS Aggregator",

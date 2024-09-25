@@ -1,11 +1,11 @@
-package main
+package config
 
 import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 )
 
-func getRouter(dbQueryApiConfig DatabaseQueryApiConfig) *chi.Mux {
+func GetRouter(webRoutes func(*chi.Mux), apiRoutes func(*chi.Mux)) *chi.Mux {
 
 	router := chi.NewRouter()
 
@@ -20,10 +20,10 @@ func getRouter(dbQueryApiConfig DatabaseQueryApiConfig) *chi.Mux {
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 
-	webRoutes(router, dbQueryApiConfig)
+	webRoutes(router)
 
 	apiRouter := chi.NewRouter()
-	apiRoutes(apiRouter, dbQueryApiConfig)
+	apiRoutes(apiRouter)
 
 	router.Mount("/v1", apiRouter)
 

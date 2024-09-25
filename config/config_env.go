@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func setupEnv() {
+func SetupEnv() {
 	filename := `.env`
 
 	envErr := godotenv.Load(filename)

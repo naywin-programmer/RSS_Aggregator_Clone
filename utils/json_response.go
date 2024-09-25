@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func toJSON(payload interface{}) ([]byte, bool) {
+func ToJSON(payload interface{}) ([]byte, bool) {
 	data, err := json.Marshal(payload)
 	if err != nil {
 		log.Printf("Fail to convert to JSON format: %v", payload)
@@ -16,8 +16,8 @@ func toJSON(payload interface{}) ([]byte, bool) {
 	return data, false
 }
 
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	data, err := toJSON(payload)
+func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	data, err := ToJSON(payload)
 	if err {
 		w.WriteHeader(500)
 		return
@@ -28,7 +28,7 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.Write(data)
 }
 
-func respondErrorWithJSON(w http.ResponseWriter, code int, msg string) {
+func RespondErrorWithJSON(w http.ResponseWriter, code int, msg string) {
 	if code > 499 {
 		log.Println("Server 5XX Error:", msg)
 	}
@@ -37,7 +37,7 @@ func respondErrorWithJSON(w http.ResponseWriter, code int, msg string) {
 		Error string `json:"error"`
 	}
 
-	respondWithJSON(w, code, errorResponse{
+	RespondWithJSON(w, code, errorResponse{
 		Error: msg,
 	})
 }

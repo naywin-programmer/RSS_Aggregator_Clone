@@ -4,19 +4,22 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/naywin-programmer/RSS_Aggregator/config"
+	"github.com/naywin-programmer/RSS_Aggregator/routes"
 )
 
-// 7:26:15
 func main() {
-	setupEnv()
+	config.SetupEnv()
 
 	portString := os.Getenv("PORT")
 	if portString == "" {
 		log.Fatalln("PORT didn't found in the environment setting.")
 	}
 
+	config.ConnectDatabase()
 	server := &http.Server{
-		Handler: getRouter(connectDatabase()),
+		Handler: config.GetRouter(routes.WebRoutes, routes.ApiRoutes),
 		Addr:    ":" + portString,
 	}
 
