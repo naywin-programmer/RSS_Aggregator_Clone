@@ -44,7 +44,8 @@ APP_ENV="dev"
 air
 ```
 
-- NOTE: everytime you create the new folder and air didn't watch that new folder for hot reload, add the folder name inside `include_dir` list in `.air.toml` file
+- NOTE: if u want to exclude some folder from hot reload list, add those folder name in `exclude_dir` list or `exclude_file` for file list in `.air.toml` file
 ```
-include_dir = ["configs", "controllers", "controllers/api", "controllers/contract", "middlewares", "middlewares/contract", "resources", "routes", "utils", "views", "views/profile"]
+exclude_dir = ["tmp", "vendor", "testdata", "node_modules", "api_docs", "migrations", "unused_codes"]
+exclude_file = ["static_assets/build/style.css"]
 ```
