@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -40,4 +41,28 @@ func RespondErrorWithJSON(w http.ResponseWriter, code int, msg string) {
 	RespondWithJSON(w, code, errorResponse{
 		Error: msg,
 	})
+}
+
+func RespondSuccessWithJSON(w http.ResponseWriter, code int, msg string) {
+	if code > 499 {
+		log.Println("Server 5XX Error:", msg)
+	}
+
+	type successResponse struct {
+		Success string `json:"success"`
+	}
+
+	RespondWithJSON(w, code, successResponse{
+		Success: msg,
+	})
+}
+
+func DecodeJsonParams[T any](w http.ResponseWriter, r *http.Request, parameters *T) (T, error) {
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(parameters)
+	if err != nil {
+		RespondErrorWithJSON(w, http.StatusBadRequest, fmt.Sprintf("Request JSON Parsing Error: %v", err))
+		return *parameters, err
+	}
+	return *parameters, nil
 }

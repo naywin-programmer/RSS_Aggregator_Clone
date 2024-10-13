@@ -1,0 +1,84 @@
+### API List
+### API Client Tool: REST Client (From VS Code Extensions)
+
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+@api_v1 = http://{{host}}/api/v1
+@content_type = application/json
+@api_key_prefix = API_KEY
+@user_api_key = 74207214e546c333c0277899ba68288b3134175dc9f393e37426635c891b169d
+@feed_id = efa9068e-ae9e-498d-848c-66ac8322d805
+
+### Sign Up
+# @prompt username
+# @prompt password
+POST {{api_v1}}/sign-up
+Content-Type: {{content_type}}
+
+{
+    "name": "{{username}}"
+}
+
+### Sign In
+# @prompt username
+# @prompt password
+POST {{api_v1}}/sign-in
+Content-Type: {{content_type}}
+
+{
+    "name": "{{username}}"
+}
+
+### Show All Feeds
+GET {{api_v1}}/feeds?page=1
+Content-Type: {{content_type}}
+
+### Show Feed Detail
+GET {{api_v1}}/feeds/{{feed_id}}
+Content-Type: {{content_type}}
+
+### Show Feed Followers Count
+Get {{api_v1}}/feed-follow-count/{{feed_id}}
+Content-Type: {{content_type}}
+
+### Show User Created Feeds
+GET {{api_v1}}/users/feeds?page=1
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+### Show User Followed Feeds
+GET {{api_v1}}/users/feed-follow
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+### Create New Feed
+POST {{api_v1}}/feeds
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+{
+    "title": "Add New Title",
+    "description": "Add New Description",
+    "url": "Add RSS URL"
+}
+
+### Delete The Feed
+DELETE {{api_v1}}/feeds/{{feed_id}}
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+### Follow The Feed
+POST {{api_v1}}/feed-follow/{{feed_id}}
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+### Unfollow The Feed
+DELETE {{api_v1}}/feed-follow/{{feed_id}}
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}
+
+### Get Posts By Auth User
+GET {{api_v1}}/posts?page=1
+Content-Type: {{content_type}}
+Authorization: {{api_key_prefix}} {{user_api_key}}

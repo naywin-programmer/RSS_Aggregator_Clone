@@ -3,3 +3,6 @@ RSS_Aggregator*
 *.exe
 .env
 vendor/
+node_modules/
+unused_codes/
+tmp/
